@@ -7,5 +7,39 @@ ingress:
     traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.middlewares: staging-cors-header@kubernetescrd
 
-# TODO: SealedSecrets for License / ImagePullSecret
-extraDeploy: []
+# SealedSecrets for License / ImagePullSecret
+extraDeploy: 
+- apiVersion: bitnami.com/v1alpha1
+  kind: SealedSecret
+  metadata:
+    creationTimestamp: null
+    name: marvinjs-image-credentials
+    namespace: staging
+  spec:
+    encryptedData:
+      .dockerconfigjson: AgAjr/QJ9XyJyu9m3BU2oBaskO3FjqZtESgXP7+rc7MnkLTeXFgK19goZ77gcPlZFk+gMHGOBuBG3+yEQrzNPVezSxXuxMj7yf8tgQv7QuIhEo7Sdl3Hb9ERbdEvOaIXCtme81PLo119pHtgNd/1lN7wSszItgN7/dDPxtBLCw8mH6azDlasvpRIjlBE9lRWHzAM6xWsHvCEUCwFK9POvSW8kdUTqCfDHdFGBjV3BJtZrqSRqYrsNW88Nr4q65SD3kLsGWeVe/0CGFZ4r4QFPuuLnaKessl3Je86O3X/5iAoWQYCkyFd2RZyC0kiA77SztYZviAXZL99f2D+hQK93zxVioRKlkleKU2r03LKI0KGJIX2qtEJnq+RcxLc5nY4oFj1cMucXRoo89E5K3UTzWtzRnMpsO0RRlDKvcyG8j8QoduR+5QJOSvMWb8QyGP8P0sx283Sk/Y37dU1BgykHGlb8WTtQ/1i9ta8Sk2tZwrMM21fc6q7LLO29dndyyxS2ZE4RUVmLmZYSnczpvUt5B1coZg/UAuKVt2LwaI/d95HuiknmdQ937AIdtOjstu3kvU0F/bPEjv9MLjixbM3Szg3pFY/dR7tHaWkRxEoh+v3bbepEhOXVe2Gua1mNo/Zdk1kp4vgWtB4yx0+QIY1G4MImGEK0mx0XeURjnFIMkCBe+c+3PSGnRW2oDsfEqxA2uv6Ssme38Upjpobso7ZOxa44Dp19S4C6PCz07/K5TBlnlquGIhs/+hz6vrAKBKPf8xIeIKCrClnTrpR3qJ57LyuYc3dIwvGTISjfKyHFiSXGj95586vSL1YeTpQJgueBGhaJHRFzw3Vd4G+geHb0lb8H/5zzEjHoN3YWKLu8LdDPP/ckyFf8sDnepXg8YpkJKNH0CI7hNElH3u1+YtCqsACHvm/muyE4BCMqeNwU2RbU/RxD8drlsgeoFDPQzmyV9ErNqbG2eWkg8XPAVDMNnQi3nRn66BDuLX0WbMB7aqBm24cvXUVZKpwAoQ7N3aG+PGt6+jVh6tmVCPeY/+XUJYL8zgV57b96I8pcgymwyJGPWODla1i29Z2NkET6LAqB/PLpiUvUapnc71DZ7E2WKAVAE3Igm9QucekMCdOVpPDYcwe
+    template:
+      metadata:
+        creationTimestamp: null
+        name: marvinjs-image-credentials
+        namespace: staging
+      type: kubernetes.io/dockerconfigjson
+  
+- apiVersion: bitnami.com/v1alpha1
+  kind: SealedSecret
+  metadata:
+    creationTimestamp: null
+    name: marvinjs-license
+    namespace: staging
+  spec:
+    encryptedData:
+      license-key: AgAIGRbjw6cJ5TpHtnDfVgfgqMHG5ReR4fUNFyFaAuT89WPNzJSIuuAbFCcChx8r3FNAXjL7pkQBGUBshwl/wLnQ4ehphER/FEnYw1RLhPZ7MFntJe3ie97jlx4odVymWQ7c1qY/YML8w5tI2y7XwreFwCxNdFNwAdm2Zugd0b6AVzYmxlpvmGEcaPaebREpA0y24DGhhLNmPbVlV+5K6/nsJyfzJ9B8HVK6TO7PHJ64T25ibrjHIowwMFnPHstl0qLa5F4EVnp/UeryLuR64X6NpamwFdUeU9BGztp0zL+j0g98t3qRU0CKYiSmqJITxB/RKQWWbXdzrRTkCpByYI8QiH7kKqB9FwiN/UajCXuBVAdt7XkMUEkZndCxx6sBaXn/TkIhrUaPA4pR+qyBurIaNOV3t/yue3jKAKCs6R8GvrPkAuFHuypav5iJs6WFHTBndBiLJEHtO6XNQ2WN5wVv+eWKXbGCNTEqukqqsaukxB57q/H9TU5e5oQImlpe1LvPYuJHsxd2qjzoxp+jfwBcjvaggZJUfAaQHEHCt6Sooa+BgI9QsAX9F0I2kr6788SefophG8MqRPUjlxsEB+rmpWisAdTlEWxQfmQL5UnCl1YBq7oTc27x/T6a8pWI7VcUIlL/+/p1tzUcKBf0EjTkUOtQH2+xLj8L6Nr5lQNXeinSpWHTzCx8OtOReKhkQZDX5u4VlO0BI3SrlF3kGknUw3ed9Riu96+moZz7/izbgbYQ5A==
+      license-server: AgAJ6N2JKeiljh+PWH59P5NeJQPGfouPlMQcRfPTjHx0kapoYwMXPvEJen1EVLam0q/ok3aUkQIhgTXTb+lz2uQeUm5mXyWlqVxbdRhWzN/o68Pw4Wi0GS/Yz9IDM/tnQN4+d+0sTzt6CDwyenobQ+LV8i1SeakemazXm77E6xPzdjaxLjDn/7Y1K8lhduvQ19dYuxX3g+K/9AEQmitUOWCfx6a6/R7bZBb/ycmROsHOrTqfe4HpEr8BFt86F1LWgINAzapUyTgmlp4/Vm628CI7PEkISeYHpMSTiqzTi9+FKxZZLJYhARCoGq2SKHXIzrVzHI/7R2pUrKWaC2N3TUqZhxYe1UywdvoettDTcS7qYxPs77BG05N6w/6p8FyyWuG7xU0DL0bZsnFNyJOQnIs6JeIibQewNqROF0GThS0eUb25qCkVebXVful09KcOCqZQZ5fIm0BqAzRWYFD7NhGGeleAYZ981ehKxiQrXfxETDaZOeeF45bWq6X2k4bHVHXQc8kc+l/BXfz9czilYcpzFxsi307hMVOv5IRSu2gINNobyV44vnlDZSd9YJQvRGvK1ZWBV+MUE6den6ISbJ8VybSyvoCO8sHXyA1PpbUxFHQiEDW7B8HCQ533k/Y7ZwyRA/q1yqT07D+evhy6xmRJzAA4KUGmM1wmF3z86t/AZz18o0BF34VCSpr9h6/U6FyIoN/4E78zKYJmLtQhLOEvAbCeH0wYft+7djGoaw==
+    template:
+      metadata:
+        creationTimestamp: null
+        name: marvinjs-license
+        namespace: staging
+      type: Opaque
+
+

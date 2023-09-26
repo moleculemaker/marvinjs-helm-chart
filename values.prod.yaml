@@ -7,5 +7,37 @@ ingress:
     traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.middlewares: oauth2-proxy-cors-header@kubernetescrd
 
-# TODO: SealedSecrets for License / ImagePullSecret
-extraDeploy: []
+# SealedSecrets for License / ImagePullSecret
+extraDeploy: 
+- apiVersion: bitnami.com/v1alpha1
+  kind: SealedSecret
+  metadata:
+    creationTimestamp: null
+    name: marvinjs-license
+    namespace: alphasynthesis
+  spec:
+    encryptedData:
+      license-key: AgCbsqMiyLRyceu7IA2lxilW75vaw0wpnQFpbP9CGLjq4IccKdGpWMHPCTpZXzP+c5Ef1BD5QiRCXwp2T5hL4JXYt3Z/JmRmE+BYU/i8eu619alS5M1R5KZY/9MjvAYSZ8lHIJE4sEHcXDknlNuV5VugcmRQbMgzNbgFme50BCPQ1zDZf6ns6F5NXJddD9A6S9icKAKkChS6ZR6uI9UtY639t20wFNzyGakOSAs7FdQ2PN20pEtVh0lhPzloFUAzsWWT0uZEC2FBaNHhwSU+5V6vlJVgToQEn1IUKU8x05aBKpu9Lce41X1jYzcZN2FXvEFAIjO+nJ/CFtD/VX93b5S0agiYyaMuLKPIQr2CndzhhBEPeOQmCrTP9Os6gQGq4H5ZiwseDpor+098jslrzE76+0mzvZdSXPCo045SEGwdzAJzr6Z8cV0e2gthIGNhA9Z7LSDOBQyYTs+bSsx1PW8U+dKeQVFz5qIYQljuduE1R5NnhfUWBuXGfV74hLPYtJz25Z5N8DR6nUwhCcIg8qpVmUy+sCA5rbwwPTEl7zLylOZk51UhWO/RZdOhm3I3yAO+xVPMr/bIF2eYtdgLWCQ/KDh7Ui2lM2LMvVSjym18ipHw84PBuLzL+2OntLQkQlqdDOfjZU59Irw6dT2c8qatY/s76XtIaXxRMKR5I416PfCsZuy700bfAFnRrCjv3EqhfsH9rOZ4dGPOnXy2sv2kAS4ugMaeIh0bwGExCBM/MGahVg==
+      license-server: AgCroPjXq0Xo/lKaJ5ru5axR3wkrwi6zya+mmOECo3PDVbRQuggisF05rTRhPcKPMeQMQPmOU9GP8fPJo3T7ZZ/e+XeKOjf90MxU7sdup/69Y/SFdvltk73so+FPeJXxk1xWitM+T2syVsc9s5AnUjZ5f+JH0CQI/ezT+clpZSqQYD4N46wZUtgb4lJ4sbUnzrV7oL/cM3GPAbTi8YUJyq5adr/XS9OzsBWyiBVfc+ACBZC6R/AKaJ8lYEWzrjvOfJCnKKFV87SBFMc3+9el7y2ngZhn/l926RSAJBqBL8aO6+AwediaQLUjg+/lBT/CHy7Xjjepa9OL+aYKHsptMXY+ikhLYwf1QEEfDd+dkbKAtYnhlL8gbFOYjztyRgx19IIgEqHARcIRMZYwjFRbShCYwwjFaWKonMK/U2HmWiYwje+gwVYV1kGJ8F3M1DjoTGmgGdnwa4cwQc/CjVtHkM+Ic9wgt0zZ8Yg1dP74rVIrBAw5Z3EnvF20NIgP+55ogTBNd3boeFiFUYMyGYDYu7+P1dGnLFSZoi5GF40DWDvjkg2V9UidVusRb2x5cabivy0twNZbx4psWo9SsxSyJmBcEajS+FGTAoebowGoVMZogEd4o7r80jrRZjUCTyBXiL0Jhr4TveOO1WjGoHX+t+bMICMePnyMmLcDJyPkQlVqTmPuN0ovlCTOzwJZsSNqmoTmdJVEWWxCk6EHVB4BOMxit7+Egk/hnGiexChQSw==
+    template:
+      metadata:
+        creationTimestamp: null
+        name: marvinjs-license
+        namespace: alphasynthesis
+      type: Opaque
+  
+- apiVersion: bitnami.com/v1alpha1
+  kind: SealedSecret
+  metadata:
+    creationTimestamp: null
+    name: marvinjs-image-credentials
+    namespace: alphasynthesis
+  spec:
+    encryptedData:
+      .dockerconfigjson: AgBdLZX7f8n9TkpMytPYQY3RK8VwrOvwyR4oc080OHGdGmdo+eSkJqFq5BJBfm+FeEv+rscGMmkisqaLPkY2TdBc+H5bnQvtyDWpYdiIVN9zeYPUFx685NnRzoWfSkGfvIT2zCral462QCS84BR5shBHYQU10Akio8opVwiLJtaXVSw4sGV7wGEBGsoud+mgMsCr9XgogEZuYyIBe3z6m3jF9tlv+GWZZwpx2riX43V4Z1h7u7WhZzJvaIplr+5mONYumqTqayO8H15VwhkpFBvI3Di4OrIm+H/vsfKNfp+CSqfdLjU/a5oAQGLi0OYkfGk8k7KhlZZZxK6jzZKzbwi4wWz2kIn/IB5lUivyv6MfAGX7c6X0Xihx4CT55NCKj9PlLw6uYAHBCUj6vK9EW14SfyImWRqOLJpbQpziRwXCH1NXN4pi01M57z6rjU3Sf9MKMQoEu7PYQVs+V9/jNaFxsGGZnMi+on4bJuAD/4/bWpzv4SsHWF/iowZ7pUwTZ/Rh3lNpdm2sCot2aPMVDI4sOq+K0iNFPiXbSPdBjzSSBtRQStEWzbPwGEzWKAOzHeJsY4xCfjnYbhCE6QDxo0iab9Eb4h+SUytNpXSKO59l+dckWIy+z+glm9QfUFR8hNVNrLVNDYNtnt5r79ed+KfOmiZSMTlQmJKn96aHB12/z6f9bi9pgDmAQTMjjvw+/FnCQv/3138Ir4zkmWn6DrSZV97KO19uZirNlbXHzX1yDQcqdPK50QUWQgx2hCw95MDEQb3XhGVvhW6yHxcGPe4nkEoVP6JvnKdjOroasx0fugOLSArr39ZZWyf7k1z+9o/8Fvhw3d/Yrv6P8YSy68VegYqfjxOmCYgkWMqMxQuN6r5mHbqIY2+pTmL+xLHd7/LfaEtAz8LVlVraFkcU4sQJO2BrTb1IZiYUSe2RwQkQv6mPX8hBNorYdIUJxclWsatjHzaBFp9p1lu3NpkH65M+5tRtSg97mSOIwragXiwtImq3uKYyMOkxFMpiYBMBOZ2MAhNcLrFGehi381EZVPqBVFQX9Hz33crSMJiv08aOK7/rQmxmpMDIwfAYRijglqcmkSQZBvhP970SdVA5FWgEIILrAr5yyJsAKwWhx1CwiOD0
+    template:
+      metadata:
+        creationTimestamp: null
+        name: marvinjs-image-credentials
+        namespace: alphasynthesis
+      type: kubernetes.io/dockerconfigjson
