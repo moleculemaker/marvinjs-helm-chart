@@ -1,4 +1,4 @@
-{{- define "imagePullSecret" }}
+{{- define "marvinjs.v1.imagePullSecret" }}
 {{- with .Values.controller.imageCredentials }}
 {{- printf "{\"auths\":{\"%s\":{\"username\":\"%s\",\"password\":\"%s\",\"email\":\"%s\",\"auth\":\"%s\"}}}" .registry .username .password .email (printf "%s:%s" .username .password | b64enc) | b64enc }}
 {{- end }}
