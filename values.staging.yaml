@@ -7,6 +7,12 @@ ingress:
     traefik.ingress.kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.middlewares: staging-cors-header@kubernetescrd
 
+controller:
+  imageCredentials:
+    existingSecret: marvinjs-image-credentials
+  license:
+    existingSecret: marvinjs-license
+
 # SealedSecrets for License / ImagePullSecret
 extraDeploy: 
 - apiVersion: bitnami.com/v1alpha1
