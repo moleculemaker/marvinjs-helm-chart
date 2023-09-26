@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    app: marvinjs
+  type: {{ .Values.service.type }}
+  ports:
+    - name: marvinjs
+      protocol: TCP
+      port: 8080
+      targetPort: 8080

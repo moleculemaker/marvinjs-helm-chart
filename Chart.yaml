@@ -1,0 +1,4 @@
+apiVersion: v2
+description: "MarvinJS Webservices"
+name: marvinjs
+version: 1.0.0

@@ -1,0 +1,51 @@
+# Defines the deployment of the app running in a pod on any worker node
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: marvinjs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: marvinjs
+  template:
+    metadata:
+      labels:
+        app: marvinjs
+    spec:
+      imagePullSecrets:
+{{- if .Values.controller.imageCredentials.existingSecret }}
+      - name: {{ .Values.controller.imageCredentials.existingSecret }}
+{{- else }}
+      - name: marvinjs-image-credentials
+{{- end }}
+
+      containers:
+        - name: marvinjs
+          image: {{ .Values.controller.image }}
+          imagePullPolicy: {{ .Values.controller.imagePullPolicy | default "Always" }}
+          env:
+          - name: CHEMAXON_LICENSE_SERVER_KEY
+{{- if .Values.controller.license.existingSecret }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.controller.license.existingSecret }}
+                key: license-key
+{{- else }}
+            value: {{ .Values.controller.license.licenseKey }}
+{{- end }}
+          - name: CHEMAXON_LICENSE_SERVER_URL
+{{- if .Values.controller.license.existingSecret }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.controller.license.existingSecret }}
+                key: license-server
+{{- else if .Values.controller.license.licenseServer }}
+            value: {{ .Values.controller.license.licenseServer }}
+{{- else }}
+            value: "https://license.chemaxon.com/"
+{{- end }}
+          ports:
+            - containerPort: 8080

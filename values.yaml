@@ -1,0 +1,36 @@
+extraDeploy: []
+
+ingress:
+  hostname: marvinjs.backend.localhost
+  tls: false
+  annotations: {}
+
+service:
+  type: ClusterIP
+
+controller:
+  image: "hub.chemaxon.com/cxn-docker-release/chemaxon/mjs-webservice:latest"
+  imagePullPolicy: Always
+
+  # Credentials for pulling the private MarvinJS image
+  imageCredentials:
+    # For prod/staging deployments
+    existingSecret: ""
+
+    # For ease in local development
+    registry: hub.chemaxon.com
+    username: ""
+    password: ""
+    email: ""
+
+
+  # License Key/Server for using MarvinJS
+  license:
+    # For prod/staging deployments
+    existingSecret: ""
+
+    # For ease in local development
+    licenseServer: ""
+    licenseKey: ""
+  
+
