@@ -1,3 +1,7 @@
 ingress:
   ingressClassName: nginx
 
+controller:
+  imagePullPolicy: IfNotPresent
+  license:
+    secretFile: marvinjs-license

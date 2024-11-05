@@ -26,7 +26,10 @@ controller:
 
   # License Key/Server for using MarvinJS
   license:
-    # For prod/staging deployments
+    # Mount in license as a file
+    secretFile: ""
+
+    # Attach license key/server as envvars (for prod/staging deployments)
     existingSecret: ""
 
     # For ease in local development

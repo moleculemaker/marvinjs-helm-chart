@@ -5,6 +5,19 @@ Helm chart for running MarvinJS Webservices in a Kubernetes cluster
 ## References
 * Docker Compose recipe: [ChemAxon/marvinjs-docker-example](https://github.com/ChemAxon/marvinjs-docker-example/blob/master/official_image/mjs-with-official-license-server.yml)
 
+### License File
+If you have a license file (instead of a license key), mount it into the container at runtime:
+```
+/home/cxnapp/.chemaxon/licenses/license.cxl
+```
+
+Create a secret from the file using the following:
+```bash
+kubectl create secret generic marvinjs-license --from-file=license.cxl
+```
+
+And specify this secret name as the value for `controller.license.secretFile`.
+
 
 ## PSA: Always check Pod `AGE` after deploying
 You may need to delete the running Pod to trigger a new Pod to be created with the new config.

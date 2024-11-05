@@ -49,3 +49,16 @@ spec:
 {{- end }}
           ports:
             - containerPort: 8080
+{{- if .Values.controller.license.secretFile }}
+          volumeMounts:
+            - mountPath: "/home/cxnapp/.chemaxon/"
+              name: license
+              readOnly: true
+      volumes:
+       - name: license
+         secret:
+           secretName: {{ .Values.controller.license.secretFile }}
+           items:
+            - key: license.cxl
+              path: license.cxl
+{{- end }}
